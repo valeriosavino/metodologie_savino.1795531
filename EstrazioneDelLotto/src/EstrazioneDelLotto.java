@@ -1,5 +1,5 @@
 /**
- * @author savino
+ * @author savinovalerio
  */
 public class EstrazioneDelLotto
 {
