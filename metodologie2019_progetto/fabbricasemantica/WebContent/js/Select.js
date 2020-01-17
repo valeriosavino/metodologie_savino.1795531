@@ -1,6 +1,11 @@
 /* Generated from Java with JSweet 2.3.0-SNAPSHOT - http://www.jsweet.org */
 var quickstart;
 (function (quickstart) {
+    /**
+     * Classe su cui si vuole costruire oggetto Select
+     * @author Savino
+     * @class
+     */
     class Select {
         constructor() {
         }
@@ -8,6 +13,12 @@ var quickstart;
     quickstart.Select = Select;
     Select["__class"] = "quickstart.Select";
     (function (Select) {
+        /**
+         * Crea l'elemento select
+         * @class
+         * @extends quickstart.Builder
+         * @author Savino
+         */
         class SelectBuilder extends quickstart.Builder {
             constructor() {
                 super();
@@ -15,6 +26,11 @@ var quickstart;
                     this.select = null;
                 this.select = document.createElement("select");
             }
+            /**
+             * Inserisce una option disabilitata e una sequenza di options nella select
+             * @param {Array} options sequenza di options
+             * @return {quickstart.Select.SelectBuilder} oggetto builder
+             */
             add(...options) {
                 let defaultOption = new quickstart.Option.OptionBuilder().setInnerText("Seleziona un valore...").selected().disabled().hidden().build();
                 this.select.add(defaultOption);
@@ -23,6 +39,11 @@ var quickstart;
                 }
                 return this;
             }
+            /**
+             * Assegna un nome alla select
+             * @param {string} name nome della select
+             * @return {quickstart.Select.SelectBuilder} oggetto builder
+             */
             setName(name) {
                 this.select.name = name;
                 return this;

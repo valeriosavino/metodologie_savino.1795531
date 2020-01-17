@@ -1,11 +1,15 @@
 /* Generated from Java with JSweet 2.3.0-SNAPSHOT - http://www.jsweet.org */
 var quickstart;
 (function (quickstart) {
+    /**
+     * Classe per creazione della pagina translationValidation.html
+     * @author Savino
+     * @extends quickstart.BasePage
+     * @class
+     */
     class TranslationValidation extends quickstart.BasePage {
         constructor() {
-            super();
-            if (this.l1 === undefined)
-                this.l1 = null;
+            super("Data la seguente parola e la sua definizione, scegliere la miglior traduzione");
             if (this.word === undefined)
                 this.word = null;
             if (this.description === undefined)
@@ -22,11 +26,9 @@ var quickstart;
                 this.hDescription = null;
             if (this.divCheckBox === undefined)
                 this.divCheckBox = null;
-            this.l1 = new quickstart.Label.LabelBuilder().setTextContent("Data la seguente parola e la sua definizione, scegliere la miglior traduzione").setClassName("form-control-plaintext").setAttribute("style", "font-weight:bold").build();
-            this.appendContainer(this.l1);
-            this.word = new quickstart.Label.LabelBuilder().setClassName("form-control-plaintext").build();
+            this.word = new quickstart.Label.LabelBuilder().css("display", "block").css("text-align", "center").build();
             this.hWord = this.hidden("hWord");
-            this.description = new quickstart.Label.LabelBuilder().setClassName("form-control-plaintext").build();
+            this.description = new quickstart.Label.LabelBuilder().css("display", "block").css("text-align", "center").build();
             this.hDescription = this.hidden("hDescription");
             this.checks = ([]);
             this.lChecks = ([]);
@@ -39,9 +41,9 @@ var quickstart;
                 let sWord = (json["word"]);
                 let sDescription = (json["description"]);
                 let translations = (json["translations"]);
-                $(this.word).text(sWord);
+                $(this.word).text("Parola: " + sWord);
                 $(this.hWord).attr("value", sWord);
-                $(this.description).text(sDescription);
+                $(this.description).text("Descrizione: " + sDescription);
                 $(this.hDescription).attr("value", sDescription);
                 for (let i = 0; i < this.checks.length - 1; i++) {
                     {
@@ -54,7 +56,7 @@ var quickstart;
                 $(/* get */ this.lChecks[this.lChecks.length - 1]).text("Nessuna delle precedenti");
                 return null;
             });
-            this.divCheckBox = (o => o.append.apply(o, (this.divChecks.slice(0))))(new quickstart.Div.DivBuilder()).append(this.hWord, this.hDescription).build();
+            this.divCheckBox = (o => o.append.apply(o, (this.divChecks.slice(0))))(new quickstart.Div.DivBuilder().setClassName("form-check")).css("margin-top", "10px").css("margin-right", "15px").append(this.hWord, this.hDescription).build();
             this.createForm(TranslationValidation.__quickstart_TranslationValidation_SERVLET_URL, this.word, this.description, this.divCheckBox);
         }
         /**

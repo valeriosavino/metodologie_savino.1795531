@@ -18,9 +18,8 @@ var quickstart;
                 this.divImg1 = null;
             if (this.divImg2 === undefined)
                 this.divImg2 = null;
-            this.checkSession();
-            this.fs = new quickstart.Image.ImageBuilder().src("logo.jpg").setAttribute("style", "width:80%;height:50%;").build();
-            this.start = new quickstart.Image.ImageBuilder().src("play.jpg").onClick((click) => window.location.href = Home.TASK_URL).setAttribute("style", "width:200px;height:200px;").setClassName("center").build();
+            this.fs = new quickstart.Image.ImageBuilder().src("logo_fs.png").setAttribute("style", "width:80%;height:60%;").build();
+            this.start = new quickstart.Image.ImageBuilder().src("logo_play.png").onClick((click) => window.location.href = Home.TASK_URL).setAttribute("style", "width:200px;height:200px;").setClassName("center").build();
             this.divImg1 = new quickstart.Div.DivBuilder().setAlign("center").append(this.fs).build();
             this.divImg2 = new quickstart.Div.DivBuilder().setAlign("center").append(this.start).build();
             this.appendContainer(this.divImg1, this.divImg2);

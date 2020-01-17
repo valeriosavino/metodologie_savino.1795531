@@ -9,9 +9,7 @@ var quickstart;
      */
     class MyAnnotation extends quickstart.BasePage {
         constructor() {
-            super();
-            if (this.l1 === undefined)
-                this.l1 = null;
+            super("Date le seguenti parole, clicca sul sinonimo corretto per ognuna di esse");
             if (this.words === undefined)
                 this.words = null;
             if (this.selected === undefined)
@@ -26,8 +24,6 @@ var quickstart;
                 this.reset = null;
             if (this.divBox === undefined)
                 this.divBox = null;
-            this.l1 = new quickstart.Label.LabelBuilder().setTextContent("Scegli i sinonimi corretti per le seguenti parole").setAttribute("style", "font-weight:bold").setClassName("form-control-plaintext").build();
-            this.appendContainer(this.l1);
             this.words = ([]);
             for (let i = 0; i < 3; i++) {
                 this.createWords();
@@ -54,7 +50,7 @@ var quickstart;
             /* add */ (this.hWords.push(this.hidden("hWord1")) > 0);
             /* add */ (this.hWords.push(this.hidden("hWord2")) > 0);
             /* add */ (this.hWords.push(this.hidden("hWord3")) > 0);
-            this.divBox = (o => o.append.apply(o, (this.hWords.slice(0))))((o => o.append.apply(o, (this.sections.slice(0))))(new quickstart.Div.DivBuilder().setClassName("card-deck mb-3 text-center"))).build();
+            this.divBox = (o => o.append.apply(o, (this.hWords.slice(0))))((o => o.append.apply(o, (this.sections.slice(0))))(new quickstart.Div.DivBuilder().setClassName("card-deck mb-3 text-center"))).css("margin-top", "15px").css("margin-left", "15px").css("margin-right", "15px").build();
             $.getJSON(quickstart.BasePage.REST_URL, "task=MY_ANNOTATION", (result, a, ctx) => {
                 let json = result;
                 let words = (json["words"]);
@@ -70,41 +66,47 @@ var quickstart;
                 }
                 return null;
             });
-            this.reset = new quickstart.Input.InputBuilder().setType("reset").setClassName("btn btn-outline-danger").build();
+            this.reset = new quickstart.Input.InputBuilder().setType("reset").setClassName("btn btn-danger").css("margin-bottom", "15px").css("margin-left", "30px").css("margin-right", "30px").build();
             this.createForm(MyAnnotation.__quickstart_MyAnnotation_SERVLET_URL, this.divBox, this.reset);
         }
         /**
          * Crea i bottoni per i vari sinonimi
-         * @param {string} id
-         * @param {HTMLInputElement} field
+         * @param {string} id id del bottone
+         * @param {HTMLInputElement} field casella di testo della section a cui il bottone far� riferimento
          */
         createSynonym(id, field) {
             let synonym = new quickstart.Input.InputBuilder().setClassName("btn btn-outline-dark").setType("button").setId(id).onClick((click) => MyAnnotation.buttonClick(id, field)).build();
             /* add */ (this.synonyms.push(synonym) > 0);
         }
         /**
-         * Crea le caselle di testo dove verranno inseriti i sinonimi
-         * @param {string} name
+         * Crea le caselle di testo bloccate dove verranno inseriti i sinonimi
+         * @param {string} name nome della casella
          */
         createSelected(name) {
             let selected = new quickstart.Input.InputBuilder().setType("text").setName(name).readOnly().build();
             /* add */ (this.selected.push(selected) > 0);
         }
         /**
-         * Crea le label per le words
+         * Crea le label per le words nei bottoni
          */
         createWords() {
             let word = new quickstart.Label.LabelBuilder().build();
             /* add */ (this.words.push(word) > 0);
         }
+        /**
+         * Crea un contenitore per ogni sezione di parole
+         * @param {HTMLLabelElement} word parola fornita
+         * @param {HTMLInputElement} selected casella di testo bloccata
+         * @param {Array} buttons bottoni da selezionare
+         */
         createSection(word, selected, ...buttons) {
             let div = new quickstart.Div.DivBuilder().setClassName("card mb-4 shadow-sm").append(word).append(selected).append(...buttons).build();
             /* add */ (this.sections.push(div) > 0);
         }
         /**
-         * Inserisce il valore del sinonimo selezionato nella casella di testo
-         * @param {string} id
-         * @param {HTMLInputElement} field
+         * Inserisce il valore del sinonimo selezionato nella casella di testo bloccata
+         * @param {string} id id del bottone
+         * @param {HTMLInputElement} field casella di testo bloccata
          * @return
          * @return {*}
          */
@@ -116,6 +118,9 @@ var quickstart;
             new MyAnnotation();
         }
     }
+    /**
+     * Indirizzo per servlet MyAnnotation
+     */
     MyAnnotation.__quickstart_MyAnnotation_SERVLET_URL = "myAnnotation.jsp";
     quickstart.MyAnnotation = MyAnnotation;
     MyAnnotation["__class"] = "quickstart.MyAnnotation";

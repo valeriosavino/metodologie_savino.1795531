@@ -1,6 +1,11 @@
 /* Generated from Java with JSweet 2.3.0-SNAPSHOT - http://www.jsweet.org */
 var quickstart;
 (function (quickstart) {
+    /**
+     * Classe su cui si vuole costruire oggetto Anchor
+     * @author Savino
+     * @class
+     */
     class Anchor {
         constructor() {
         }
@@ -23,17 +28,16 @@ var quickstart;
             }
             /**
              * Assegna un indirizzo all'anchor
-             * @param {string} href
-             * @return
-             * @return {quickstart.Anchor.AnchorBuilder}
+             * @param {string} href Stringa contenente indirizzo
+             * @return {quickstart.Anchor.AnchorBuilder} oggetto builder
              */
             setHref(href) {
                 this.a.href = href;
                 return this;
             }
             /**
-             * Modifica il contenuto testuale dell'anchor
-             * @param {string} text
+             * Assegna un contenuto testuale all'anchor
+             * @param {string} text il testo da visualizzare
              * @return
              * @return {quickstart.Anchor.AnchorBuilder}
              */
@@ -61,7 +65,7 @@ var quickstart;
                 return this;
             }
             /**
-             * Restituisce l'anchor
+             *
              * @return {HTMLAnchorElement}
              */
             build() {

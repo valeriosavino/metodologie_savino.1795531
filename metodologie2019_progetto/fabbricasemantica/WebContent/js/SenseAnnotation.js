@@ -10,12 +10,12 @@ var quickstart;
     class SenseAnnotation extends quickstart.BasePage {
         constructor() {
             super();
-            if (this.l1 === undefined)
-                this.l1 = null;
+            if (this.request1 === undefined)
+                this.request1 = null;
             if (this.word === undefined)
                 this.word = null;
-            if (this.l2 === undefined)
-                this.l2 = null;
+            if (this.request2 === undefined)
+                this.request2 = null;
             if (this.description === undefined)
                 this.description = null;
             if (this.checks === undefined)
@@ -32,10 +32,10 @@ var quickstart;
                 this.hWord = null;
             if (this.hDescription === undefined)
                 this.hDescription = null;
-            this.l1 = new quickstart.Label.LabelBuilder().setTextContent("Seleziona il significato corretto della parola \"").setAttribute("style", "font-weight:bold").build();
+            this.request1 = new quickstart.Label.LabelBuilder().setTextContent("Seleziona il significato corretto della parola \"").setAttribute("style", "font-weight:bold").build();
             this.word = new quickstart.Label.LabelBuilder().setAttribute("style", "font-weight:bold").build();
-            this.l2 = new quickstart.Label.LabelBuilder().setTextContent("\" nella seguente frase").setAttribute("style", "font-weight:bold").build();
-            this.description = new quickstart.Label.LabelBuilder().build();
+            this.request2 = new quickstart.Label.LabelBuilder().setTextContent("\" nella seguente frase").setAttribute("style", "font-weight:bold").build();
+            this.description = new quickstart.Label.LabelBuilder().css("display", "block").css("text-align", "center").build();
             this.hWord = this.hidden("hWord");
             this.hDescription = this.hidden("hDescription");
             this.checks = ([]);
@@ -63,14 +63,14 @@ var quickstart;
                 }
                 return null;
             });
-            this.divWord = new quickstart.Div.DivBuilder().setClassName("form-inline").append(this.l1).append(this.word).append(this.l2).build();
-            this.appendContainer(this.divWord, this.description);
-            this.checkContainer = (o => o.append.apply(o, (this.divChecks.slice(0))))(new quickstart.Div.DivBuilder().setClassName("form-check")).build();
-            this.createForm(SenseAnnotation.__quickstart_SenseAnnotation_SERVLET_URL, this.hWord, this.hDescription, this.checkContainer);
+            this.divWord = new quickstart.Div.DivBuilder().setClassName("form-inline").append(this.request1).append(this.word).append(this.request2).build();
+            this.appendContainer(this.divWord);
+            this.checkContainer = (o => o.append.apply(o, (this.divChecks.slice(0))))(new quickstart.Div.DivBuilder().setClassName("form-check")).css("margin-top", "10px").css("margin-right", "15px").build();
+            this.createForm(SenseAnnotation.__quickstart_SenseAnnotation_SERVLET_URL, this.hWord, this.hDescription, this.description, this.checkContainer);
         }
         /**
          * Crea una checkbox con la sua label e li formatta all'interno di un div
-         * @param {string} id
+         * @param {string} id id della checkbox
          */
         createCheck(id) {
             let check = new quickstart.Input.InputBuilder().setType("checkbox").setName("check[]").setId(id).build();
@@ -86,6 +86,9 @@ var quickstart;
             new SenseAnnotation();
         }
     }
+    /**
+     * Indirizzo per la servlet di senseAnnotation
+     */
     SenseAnnotation.__quickstart_SenseAnnotation_SERVLET_URL = "senseAnnotation.jsp";
     quickstart.SenseAnnotation = SenseAnnotation;
     SenseAnnotation["__class"] = "quickstart.SenseAnnotation";

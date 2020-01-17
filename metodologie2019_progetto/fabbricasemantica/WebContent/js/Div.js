@@ -2,7 +2,7 @@
 var quickstart;
 (function (quickstart) {
     /**
-     *
+     * Classe su cui si vuole costruire oggetto Div
      * @author Savino
      * @class
      */
@@ -14,7 +14,7 @@ var quickstart;
     Div["__class"] = "quickstart.Div";
     (function (Div) {
         /**
-         * Istanzia l'elemento div
+         * Crea l'elemento div
          * @class
          * @extends quickstart.Builder
          * @author Savino
@@ -27,17 +27,8 @@ var quickstart;
                 this.div = document.createElement("div");
             }
             /**
-             * Assegna l'id all'elemento div
-             * @param {string} id
-             * @return {quickstart.Div.DivBuilder} oggetto builder
-             */
-            setId(id) {
-                this.div.id = id;
-                return this;
-            }
-            /**
              * Assegna l'allineamento del div all'interno della pagina
-             * @param {string} align
+             * @param {string} align posizione nella pagina
              * @return {quickstart.Div.DivBuilder} oggetto builder
              */
             setAlign(align) {
@@ -46,9 +37,8 @@ var quickstart;
             }
             /**
              * Permette di aggiungere componenti all'interno del div
-             * @param elementi da aggiungere
+             * @param {Array} e elementi da aggiungere
              * @return {quickstart.Div.DivBuilder} oggetto builder
-             * @param {Array} e
              */
             append(...e) {
                 $(this.div).append(...e);
@@ -56,8 +46,8 @@ var quickstart;
             }
             /**
              * Assegna degli attributi al div
-             * @param {string} name
-             * @param {string} value
+             * @param {string} name nome dell'attributo
+             * @param {string} value valore dell'attributo
              * @return
              * @return {quickstart.Div.DivBuilder}
              */
@@ -66,10 +56,9 @@ var quickstart;
                 return this;
             }
             /**
-             * Modifica lo stile CSS del div
+             *
              * @param {string} property
              * @param {string} value
-             * @return
              * @return {quickstart.Div.DivBuilder}
              */
             css(property, value) {

@@ -1,6 +1,11 @@
 /* Generated from Java with JSweet 2.3.0-SNAPSHOT - http://www.jsweet.org */
 var quickstart;
 (function (quickstart) {
+    /**
+     * Classe su cui si vuole costruire oggetto H1
+     * @author Savino
+     * @class
+     */
     class H1 {
         constructor() {
         }
@@ -8,6 +13,12 @@ var quickstart;
     quickstart.H1 = H1;
     H1["__class"] = "quickstart.H1";
     (function (H1) {
+        /**
+         * Crea l'oggetto H1
+         * @class
+         * @extends quickstart.Builder
+         * @author Savino
+         */
         class HBuilder extends quickstart.Builder {
             constructor() {
                 super();
@@ -15,10 +26,22 @@ var quickstart;
                     this.h = null;
                 this.h = document.createElement("h1");
             }
+            /**
+             * Modifica il contenuto testuale dell'h1
+             * @param {string} text
+             * @return
+             * @return {quickstart.H1.HBuilder}
+             */
             setText(text) {
                 this.h.innerText = text;
                 return this;
             }
+            /**
+             * Modifica la posizione del componente nella pagina
+             * @param {string} align
+             * @return
+             * @return {quickstart.H1.HBuilder}
+             */
             setAlign(align) {
                 this.h.align = align;
                 return this;

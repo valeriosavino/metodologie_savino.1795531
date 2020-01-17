@@ -2,17 +2,53 @@
 var quickstart;
 (function (quickstart) {
     /**
-     * Classe che fa da base per tutte le pagine da HOME fino a MYANNOTATION
+     * Classe astratta che fa da base per la pagina home e tutte le pagine dei tasks
      * @author Savino
      * @class
      */
     class BasePage {
-        constructor() {
-            if (this.container === undefined)
-                this.container = null;
-            this.checkSession();
-            $("body").append(this.createNavbar());
-            this.container = new quickstart.Div.DivBuilder().setClassName("container").build();
+        constructor(text) {
+            if (((typeof text === 'string') || text === null)) {
+                let __args = arguments;
+                {
+                    let __args = arguments;
+                    if (this.request === undefined)
+                        this.request = null;
+                    if (this.container === undefined)
+                        this.container = null;
+                    if (this.request === undefined)
+                        this.request = null;
+                    if (this.container === undefined)
+                        this.container = null;
+                    (() => {
+                        this.checkSession();
+                        $("body").append(this.createNavbar());
+                        this.container = new quickstart.Div.DivBuilder().setClassName("container").build();
+                    })();
+                }
+                (() => {
+                    this.request = new quickstart.Label.LabelBuilder().setTextContent(text).setClassName("form-control-plaintext").setAttribute("style", "font-weight:bold").build();
+                    this.appendContainer(this.request);
+                })();
+            }
+            else if (text === undefined) {
+                let __args = arguments;
+                if (this.request === undefined)
+                    this.request = null;
+                if (this.container === undefined)
+                    this.container = null;
+                if (this.request === undefined)
+                    this.request = null;
+                if (this.container === undefined)
+                    this.container = null;
+                (() => {
+                    this.checkSession();
+                    $("body").append(this.createNavbar());
+                    this.container = new quickstart.Div.DivBuilder().setClassName("container").build();
+                })();
+            }
+            else
+                throw new Error('invalid overload');
         }
         /**
          * Controlla se � stata settata la sessione all'interno delle pagine
@@ -31,14 +67,13 @@ var quickstart;
             });
         }
         /**
-         * Crea la navbar con i collegamenti all'uscita del programma e alla home
-         * @return {HTMLDivElement} navbar
+         * Crea e restituisce la navbar con i collegamenti all'uscita del programma e alla home
+         * @return {HTMLDivElement} navbar formattata
          */
         createNavbar() {
             let home = new quickstart.Anchor.AnchorBuilder().setHref("home.html").setClassName("navbar-brand").setText("FabbricaSemantica").build();
             let logout = new quickstart.Anchor.AnchorBuilder().setText("ESCI").setHref(BasePage.SERVLET_URL).setClassName("btn btn-outline-info my-2 my-sm-0").build();
-            let navbar = new quickstart.Div.DivBuilder().setClassName("navbar navbar-dark bg-dark").append(home).append(logout).build();
-            return navbar;
+            return new quickstart.Div.DivBuilder().setClassName("navbar navbar-dark bg-dark").append(home).append(logout).build();
         }
         /**
          * Restituisce un indirizzo casuale di uno dei task
@@ -51,30 +86,29 @@ var quickstart;
         }
         /**
          * Crea i bottoni NEXT e SKIP e li formatta in un div
-         * @return {HTMLDivElement} buttons
+         * @return {HTMLDivElement} div con bottoni NEXT e SKIP al suo interno
          */
         createButtonsNextSkip() {
             let next = new quickstart.Input.InputBuilder().setType("submit").setValue("AVANTI").setName("avanti").setClassName("btn btn-primary btn-lg").build();
             let skip = new quickstart.Input.InputBuilder().setType("button").setValue("SALTA").setName("SALTA").css("margin-left", "10px").setClassName("btn btn-primary btn-lg").onClick((click) => window.location.href = this.getNextTask()).build();
-            let buttons = new quickstart.Div.DivBuilder().setAlign("right").setClassName("form-group").append(next).append(skip).build();
-            return buttons;
+            return new quickstart.Div.DivBuilder().setAlign("right").setClassName("form-group").css("margin-top", "15px").append(next).append(skip).build();
         }
         /**
          * Crea degli input nascosti
-         * @param {string} name
-         * @return
-         * @return {HTMLInputElement}
+         * @param {string} name nome dell'input
+         * @return {HTMLInputElement} input nascosto
          */
         hidden(name) {
             return new quickstart.Input.InputBuilder().setType("hidden").setName(name).build();
         }
         /**
          * Crea il form della pagina
-         * @param {string} url
-         * @param {Array} e
+         * @param {string} servlet_url indirizzo della servlet a cui inviare i dati del form
+         * @param {Array} e elementi da inserire nel form
          */
-        createForm(url, ...e) {
-            let form = (o => o.append.apply(o, e))(new quickstart.Form.FormBuilder().setAction(url)).setMethod("POST").append(this.createButtonsNextSkip()).build();
+        createForm(servlet_url, ...e) {
+            let card = (o => o.append.apply(o, e))(new quickstart.Div.DivBuilder().setClassName("card").css("background-color", "#D9EDF7")).build();
+            let form = new quickstart.Form.FormBuilder().setAction(servlet_url).append(card).setMethod("POST").append(this.createButtonsNextSkip()).build();
             this.appendContainer(form);
         }
         /**

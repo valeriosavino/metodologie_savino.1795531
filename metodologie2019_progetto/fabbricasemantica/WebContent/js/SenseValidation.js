@@ -1,11 +1,15 @@
 /* Generated from Java with JSweet 2.3.0-SNAPSHOT - http://www.jsweet.org */
 var quickstart;
 (function (quickstart) {
+    /**
+     * Classe per creazione della pagina senseValidation.html
+     * @author Savino
+     * @extends quickstart.BasePage
+     * @class
+     */
     class SenseValidation extends quickstart.BasePage {
         constructor() {
-            super();
-            if (this.l1 === undefined)
-                this.l1 = null;
+            super("Data la seguente parola e frase in inglese, verificare se il senso fornito \u00e8 appropriato");
             if (this.word === undefined)
                 this.word = null;
             if (this.example === undefined)
@@ -32,11 +36,9 @@ var quickstart;
                 this.hExample = null;
             if (this.hSense === undefined)
                 this.hSense = null;
-            this.l1 = new quickstart.Label.LabelBuilder().setTextContent("Data la seguente parola e frase in inglese, verificare se il senso fornito \u00e8 appropriato").setAttribute("style", "font-weight: bold").setClassName("form-control-plaintext").build();
-            this.appendContainer(this.l1);
-            this.word = new quickstart.Label.LabelBuilder().setClassName("form-control-plaintext").build();
-            this.example = new quickstart.Label.LabelBuilder().setClassName("form-control-plaintext").build();
-            this.sense = new quickstart.Label.LabelBuilder().setClassName("form-control-plaintext").build();
+            this.word = new quickstart.Label.LabelBuilder().css("display", "block").css("text-align", "center").build();
+            this.example = new quickstart.Label.LabelBuilder().css("display", "block").css("text-align", "center").build();
+            this.sense = new quickstart.Label.LabelBuilder().css("display", "block").css("text-align", "center").build();
             this.si = new quickstart.Input.InputBuilder().setClassName("form-check-input").setType("radio").setName("radio").setId("si").setValue("si").build();
             this.lSi = new quickstart.Label.LabelBuilder().setClassName("form-check-label").setHTMLFor("si").setTextContent("SI").build();
             this.no = new quickstart.Input.InputBuilder().setClassName("form-check-input").setType("radio").setName("radio").setId("no").setValue("no").build();
@@ -59,13 +61,16 @@ var quickstart;
             });
             this.divRadioSi = new quickstart.Div.DivBuilder().setClassName("form-check").append(this.si, this.lSi).build();
             this.divRadioNo = new quickstart.Div.DivBuilder().setClassName("form-check").append(this.no, this.lNo).build();
-            this.divRadio = new quickstart.Div.DivBuilder().setClassName("form-check form-check-inline text-center").append(this.divRadioSi, this.divRadioNo).build();
+            this.divRadio = new quickstart.Div.DivBuilder().setClassName("form-check form-check-inline").append(this.divRadioSi, this.divRadioNo).css("margin", "auto").build();
             this.createForm(SenseValidation.__quickstart_SenseValidation_SERVLET_URL, this.word, this.example, this.sense, this.divRadio, this.hWord, this.hExample, this.hSense);
         }
         static main(args) {
             new SenseValidation();
         }
     }
+    /**
+     * Indirizzo della servlet per SenseValidation
+     */
     SenseValidation.__quickstart_SenseValidation_SERVLET_URL = "senseValidation.jsp";
     quickstart.SenseValidation = SenseValidation;
     SenseValidation["__class"] = "quickstart.SenseValidation";

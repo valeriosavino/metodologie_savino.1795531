@@ -1,6 +1,11 @@
 /* Generated from Java with JSweet 2.3.0-SNAPSHOT - http://www.jsweet.org */
 var quickstart;
 (function (quickstart) {
+    /**
+     * Classe su cui si vuole costruire oggetto Paragraph
+     * @author Savino
+     * @class
+     */
     class Paragraph {
         constructor() {
         }
@@ -8,6 +13,12 @@ var quickstart;
     quickstart.Paragraph = Paragraph;
     Paragraph["__class"] = "quickstart.Paragraph";
     (function (Paragraph) {
+        /**
+         * Crea l'elemento paragraph
+         * @class
+         * @extends quickstart.Builder
+         * @author Savino
+         */
         class ParagraphBuilder extends quickstart.Builder {
             constructor() {
                 super();
@@ -15,6 +26,11 @@ var quickstart;
                     this.p = null;
                 this.p = document.createElement("p");
             }
+            /**
+             * Inserisce un componente all'interno del paragraph
+             * @param {HTMLElement} e elemento da inserire
+             * @return {quickstart.Paragraph.ParagraphBuilder} oggetto builder
+             */
             append(e) {
                 $(this.p).append(e);
                 return this;
