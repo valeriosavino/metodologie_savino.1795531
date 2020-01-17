@@ -23,10 +23,7 @@ public class MyAnnotation extends BasePage
 	 * Indirizzo per servlet MyAnnotation
 	 */
 	private static final String SERVLET_URL = "myAnnotation.jsp";
-	/**
-	 * ?
-	 */
-	private HTMLLabelElement l1;
+	
 	/**
 	 * Lista di parole fornite dal sistema
 	 */
@@ -52,7 +49,7 @@ public class MyAnnotation extends BasePage
 	 */
 	private HTMLInputElement reset;
 	/**
-	 * Contenitore di ogni ?
+	 * Contenitore di ogni section e hWords
 	 */
 	private HTMLDivElement divBox;
 	
@@ -61,15 +58,7 @@ public class MyAnnotation extends BasePage
 	 */
 	private MyAnnotation()
 	{			
-		super();
-		
-		l1 = new Label.LabelBuilder()
-				.setTextContent("Scegli i sinonimi corretti per le seguenti parole")
-				.setAttribute("style", "font-weight:bold")
-				.setClassName("form-control-plaintext")
-				.build();
-		
-		appendContainer(l1);
+		super("Date le seguenti parole, clicca sul sinonimo corretto per ognuna di esse");
 		
 		words = new ArrayList<>();
 		for(int i=0; i<3; i++)
@@ -105,6 +94,9 @@ public class MyAnnotation extends BasePage
 				.setClassName("card-deck mb-3 text-center")
 				.append((HTMLElement[])(sections.toArray()))
 				.append((HTMLElement[])(hWords.toArray()))
+				.css("margin-top", "15px")
+				.css("margin-left", "15px")
+				.css("margin-right", "15px")
 				.build();
 		
 		$.getJSON(REST_URL, "task=MY_ANNOTATION", (Object result, String a, JQueryXHR ctx) -> {
@@ -123,7 +115,10 @@ public class MyAnnotation extends BasePage
 		
 		reset = new Input.InputBuilder()
 				.setType("reset")
-				.setClassName("btn btn-outline-danger")
+				.setClassName("btn btn-danger")
+				.css("margin-bottom", "15px")
+				.css("margin-left", "30px")
+				.css("margin-right", "30px")
 				.build();
 		
 		createForm(SERVLET_URL, divBox, reset);
@@ -131,8 +126,8 @@ public class MyAnnotation extends BasePage
 	
 	/**
 	 * Crea i bottoni per i vari sinonimi
-	 * @param id 
-	 * @param field
+	 * @param id id del bottone
+	 * @param field casella di testo della section a cui il bottone farà riferimento
 	 */
 	protected void createSynonym(String id, HTMLInputElement field)
 	{
@@ -147,8 +142,8 @@ public class MyAnnotation extends BasePage
 	}
 	
 	/**
-	 * Crea le caselle di testo dove verranno inseriti i sinonimi
-	 * @param name
+	 * Crea le caselle di testo bloccate dove verranno inseriti i sinonimi
+	 * @param name nome della casella
 	 */
 	protected void createSelected(String name)
 	{
@@ -162,7 +157,7 @@ public class MyAnnotation extends BasePage
 	}
 	
 	/**
-	 * Crea le label per le words
+	 * Crea le label per le words nei bottoni
 	 */
 	protected void createWords()
 	{
@@ -174,9 +169,9 @@ public class MyAnnotation extends BasePage
 	
 	/**
 	 * Crea un contenitore per ogni sezione di parole
-	 * @param word
-	 * @param selected
-	 * @param buttons
+	 * @param word parola fornita
+	 * @param selected casella di testo bloccata
+	 * @param buttons bottoni da selezionare
 	 */
 	protected void createSection(HTMLLabelElement word, HTMLInputElement selected, HTMLInputElement... buttons)
 	{
@@ -190,9 +185,9 @@ public class MyAnnotation extends BasePage
 		sections.add(div);
 	}
 	/**
-	 * Inserisce il valore del sinonimo selezionato nella casella di testo
-	 * @param id
-	 * @param field
+	 * Inserisce il valore del sinonimo selezionato nella casella di testo bloccata
+	 * @param id id del bottone
+	 * @param field casella di testo bloccata
 	 * @return
 	 */
 	public static Object buttonClick(String id, HTMLInputElement field)

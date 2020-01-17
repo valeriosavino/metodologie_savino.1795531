@@ -15,33 +15,55 @@ import def.js.JSON;
  */
 public class TranslationAnnotation extends BasePage
 {
+	/**
+	 * Indirizzo della servlet per transationAnnotation
+	 */
 	private static final String SERVLET_URL = "translationAnnotation.jsp";
-	private HTMLLabelElement l1;
+	
+	/**
+	 * Label per la parola fornita
+	 */
 	private HTMLLabelElement word;
+	/**
+	 * Label per la descrizione fornita
+	 */
 	private HTMLLabelElement description;
+	/**
+	 * TextArea per inserire la traduzione
+	 */
 	private HTMLTextAreaElement translation;
+	/**
+	 * Contenitore per la textarea
+	 */
 	private HTMLDivElement divText;
+	/**
+	 * Input nascosto per la word
+	 */
 	private HTMLInputElement hWord;
+	/**
+	 * Input nascosto per la description
+	 */
 	private HTMLInputElement hDescription;
+	/**
+	 * Contenitore per word e description
+	 */
 	private HTMLDivElement divWordDescr;
 	
+	/**
+	 * Costruttore
+	 */
 	private TranslationAnnotation()
 	{
-		super();
-		
-		l1 = new Label.LabelBuilder()
-				.setTextContent("Data la seguente parola e definizione in inglese, fornire la traduzione nella tua lingua madre")
-				.setAttribute("style", "font-weight: bold")
-				.setClassName("form-control-plaintext")
-				.build();
-		
-		appendContainer(l1);
+		super("Data la seguente parola e definizione in inglese, fornire la traduzione nella tua lingua madre");
 		
 		word = new Label.LabelBuilder()
+				.css("display", "block")
+				.css("text-align", "center")
 				.build();
 		
 		description = new Label.LabelBuilder()
 				.css("display", "block")
+				.css("text-align", "center")
 				.build();
 		
 		hWord = hidden("hWord");
@@ -72,6 +94,8 @@ public class TranslationAnnotation extends BasePage
 		divText = new Div.DivBuilder()
 				.setClassName("form-group")
 				.append(divWordDescr, translation)
+				.css("margin-left", "15px")
+				.css("margin-right", "15px")
 				.build();
 		
 		createForm(SERVLET_URL, divText, hWord, hDescription);	

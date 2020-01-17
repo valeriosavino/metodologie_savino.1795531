@@ -16,10 +16,6 @@ import def.js.JSON;
 public class DefinitionAnnotation extends BasePage
 {
 	/**
-	 * ?
-	 */
-	private HTMLLabelElement l1;
-	/**
 	 * Label per la word fornita
 	 */
 	private HTMLLabelElement word;
@@ -40,6 +36,10 @@ public class DefinitionAnnotation extends BasePage
 	 */
 	private HTMLTextAreaElement definition;
 	/**
+	 * Contenitore per label word e hypernym
+	 */
+	private HTMLDivElement divWordHypernym;
+	/**
 	 * Contenitore per la textarea
 	 */
 	private HTMLDivElement divText;
@@ -54,20 +54,16 @@ public class DefinitionAnnotation extends BasePage
 	 */
 	private DefinitionAnnotation()
 	{	
-		super();
-		
-		l1 = new Label.LabelBuilder()
-				.setTextContent("Data la seguente parola e il suo iperonimo, fornire una definizione nella tua lingua")
-				.setClassName("form-control-plaintext")
-				.setAttribute("style", "font-weight:bold")
-				.build();
+		super("Data la seguente parola e il suo iperonimo, fornire una definizione nella tua lingua");
 		
 		word = new Label.LabelBuilder()
-				.setClassName("form-control-plaintext")
+				.css("display", "block")
+				.css("text-align", "center")
 				.build();
 		
 		hypernym = new Label.LabelBuilder()
-				.setClassName("form-control-plaintext")
+				.css("display", "block")
+				.css("text-align", "center")
 				.build();
 		
 		hWord = hidden("hWord");
@@ -90,12 +86,16 @@ public class DefinitionAnnotation extends BasePage
 				.setName("definition")
 				.build();
 		
+		divWordHypernym = new Div.DivBuilder()
+				.setClassName("form-group")
+				.append(word, hypernym)
+				.build();
+		
 		divText = new Div.DivBuilder()
 				.setClassName("form-group")
-				.append(l1)
-				.append(word)
-				.append(hypernym)
-				.append(definition)
+				.append(divWordHypernym, definition)
+				.css("margin-left", "15px")
+				.css("margin-right", "15px")
 				.build();
 		
 		createForm(SERVLET_URL, divText, hWord, hHypernym);

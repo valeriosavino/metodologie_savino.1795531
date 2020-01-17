@@ -1,11 +1,16 @@
 package quickstart;
 
+import static def.dom.Globals.alert;
+import static def.dom.Globals.document;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import def.dom.Event;
 import def.dom.HTMLAnchorElement;
 import def.dom.HTMLDivElement;
 import def.dom.HTMLElement;
+import def.dom.HTMLFormElement;
 import def.dom.HTMLLabelElement;
 import def.dom.HTMLSelectElement;
 import def.dom.HTMLSpanElement;
@@ -113,7 +118,10 @@ public class Signup extends BasePageUser
 	 * Paragrafo per collegamento alla pagina di login
 	 */
 	private HTMLParagraphElement plogin;
-
+	/**
+	 * Form della pagina
+	 */
+	private HTMLFormElement form;
 	/**
 	 * Costruttore
 	 */
@@ -143,8 +151,8 @@ public class Signup extends BasePageUser
 		lingue = new ArrayList<>();
 		labelForLingue = new ArrayList<>();
 		divLingue = new ArrayList<>();
-		addLingue("Italiano");
-		addLingue("Inglese");
+		addLingue("Italiano", 1);
+		addLingue("Inglese" , 2);
 		
 		labelAltreLingue = new Label.LabelBuilder()
 				.setTextContent("Altre lingue parlate: ")
@@ -233,7 +241,14 @@ public class Signup extends BasePageUser
 				.append(login)
 				.build();
 		
-		createForm(SERVLET_URL, divEmailPassword, divPassword2, divCheckBox, divAltreLingue, divLivello, divSignup, plogin);
+		form = new Form.FormBuilder()
+				.setAction(SERVLET_URL)
+				.setMethod("POST")
+				.append(divEmailPassword, divPassword2, divCheckBox, divAltreLingue, divLivello, divSignup, plogin)
+				.onSubmit(Signup::onSubmit)
+				.build();
+		
+		createPanelForm(form);
 	}
 	
 	/**
@@ -254,14 +269,14 @@ public class Signup extends BasePageUser
 	 * Crea e formatta una checkbox per le lingue, in seguito la aggiunge alla lista di checkbox 
 	 * @param value valore della checkbox
 	 */
-	public void addLingue(String value)
+	public void addLingue(String value, int numeroCheck)
 	{
 		HTMLInputElement check = new Input.InputBuilder()
 					.setType("checkbox")
 					.setName("check[]")
 					.setValue(value)
 					.setClassName("form-check-input")
-					.setId(value)
+					.setId("check"+numeroCheck)
 					.build();
 		
 		HTMLLabelElement labelForCheck = new Label.LabelBuilder()
@@ -278,6 +293,40 @@ public class Signup extends BasePageUser
 		lingue.add(check);
 		labelForLingue.add(labelForCheck);
 		divLingue.add(divCheck);
+	}
+	
+	/**
+	 * Controlla nel form al momento dell'invio se la email è scritta in modo corretto
+	 * e se almeno una checkbox per la lingua è stata selezionata
+	 * @param e evento che attiva l'onSubmit
+	 * @return false se il form non è corretto, true altrimenti
+	 */
+	public static boolean onSubmit(Event e)
+	{
+		boolean send = true;
+		
+		String email = ((HTMLInputElement) document.getElementById("input_email")).value;
+		if(!email.substring(email.indexOf("@")+1).contains("."))
+		{
+			alert("L'email inserita non è scritta in modo corretto");
+			send = false;
+		}
+	
+		HTMLInputElement check;
+		String lingue = "";
+		for(int i=1; i<=2; i++)
+		{
+			check = (HTMLInputElement) document.getElementById("check"+i);
+			if(check.checked)
+				lingue = lingue+check.value;
+		}
+		if(lingue.equals(""))
+		{
+			alert("Devi selezionare almeno una lingua");
+			send = false;
+		}
+		
+		return send;
 	}
 	
 	public static void main(String[] args)

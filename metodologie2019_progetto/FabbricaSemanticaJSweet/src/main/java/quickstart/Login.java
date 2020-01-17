@@ -1,7 +1,12 @@
 package quickstart;
 
+import static def.dom.Globals.alert;
+import static def.dom.Globals.document;
+
+import def.dom.Event;
 import def.dom.HTMLAnchorElement;
 import def.dom.HTMLDivElement;
+import def.dom.HTMLFormElement;
 import def.dom.HTMLParagraphElement;
 import def.dom.HTMLInputElement;
 
@@ -71,7 +76,33 @@ public class Login extends BasePageUser
 				.append(signup)
 				.build();
 		
-		createForm(SERVLET_URL, divEmailPassword, divLogin, psignup);
+		HTMLFormElement form = new Form.FormBuilder()
+				.setAction(SERVLET_URL)
+				.setMethod("POST")
+				.append(divEmailPassword, divLogin, psignup)
+				.onSubmit(Login::onSubmit)
+				.build();	
+		
+		createPanelForm(form);
+	}
+	
+	/**
+	 * Controlla nel form al momento dell'invio se la email è scritta in modo corretto
+	 * @param e evento che attiva l'onSubmit
+	 * @return false se il form non è corretto, true altrimenti
+	 */
+	public static boolean onSubmit(Event e)
+	{
+		boolean send = true;
+		
+		String email = ((HTMLInputElement) document.getElementById("input_email")).value;
+		if(!email.substring(email.indexOf("@")+1).contains("."))
+		{
+			alert("L'email inserita non è scritta in modo corretto");
+			send = false;
+		}
+		
+		return send;
 	}
 	
 	public static void main(String[] args)

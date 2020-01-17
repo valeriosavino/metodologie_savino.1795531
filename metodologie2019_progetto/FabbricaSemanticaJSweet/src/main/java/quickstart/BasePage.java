@@ -8,6 +8,7 @@ import def.dom.HTMLDivElement;
 import def.dom.HTMLElement;
 import def.dom.HTMLFormElement;
 import def.dom.HTMLInputElement;
+import def.dom.HTMLLabelElement;
 import def.jquery.JQueryXHR;
 import def.js.JSON;
 
@@ -33,6 +34,8 @@ abstract public class BasePage
 	 */
 	protected static final String REST_URL = "nextExample.jsp";
 	
+	private HTMLLabelElement request;
+	
 	/**
 	 * Campo che contiene il contenuto della pagina
 	 */
@@ -50,6 +53,21 @@ abstract public class BasePage
 		container = new Div.DivBuilder()
 				.setClassName("container")
 				.build();
+	}
+	/**
+	 * Costruttore con label contenente la richiesta di un task all'utentes
+	 */
+	protected BasePage(String text)
+	{
+		this(); 
+		
+		request = new Label.LabelBuilder()
+				.setTextContent(text)
+				.setClassName("form-control-plaintext")
+				.setAttribute("style", "font-weight:bold")
+				.build();
+		
+		appendContainer(request);
 	}
 	
 	/**
@@ -135,6 +153,7 @@ abstract public class BasePage
 		return new Div.DivBuilder()
 				.setAlign("right")
 				.setClassName("form-group")
+				.css("margin-top", "15px")
 				.append(next)
 				.append(skip)
 				.build();
@@ -160,9 +179,15 @@ abstract public class BasePage
 	 */
 	protected void createForm(String servlet_url, HTMLElement... e)
 	{
+		HTMLDivElement card = new Div.DivBuilder()
+				.setClassName("card")
+				.css("background-color", "#D9EDF7")
+				.append(e)
+				.build();
+		
 		HTMLFormElement form = new Form.FormBuilder()
 				.setAction(servlet_url)
-				.append(e)
+				.append(card)
 				.setMethod("POST")
 				.append(createButtonsNextSkip())
 				.build();

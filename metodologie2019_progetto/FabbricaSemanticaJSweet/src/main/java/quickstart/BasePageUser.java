@@ -1,10 +1,7 @@
 package quickstart;
 
-import static def.dom.Globals.alert;
-import static def.dom.Globals.document;
 import static def.jquery.Globals.$;
 
-import def.dom.Event;
 import def.dom.HTMLDivElement;
 import def.dom.HTMLElement;
 import def.dom.HTMLFormElement;
@@ -72,19 +69,12 @@ abstract public class BasePageUser
 	}
 	
 	/**
-	 * Crea il form e lo formatta all'interno di un pannello
+	 * Formatta il form all'interno di un pannello
 	 * @param servlet_url indirizzo della servlet a cui inviare i dati del form
 	 * @param e elementi da inserire nel form
 	 */
-	protected void createForm(String servlet_url, HTMLElement... e)
+	protected void createPanelForm(HTMLFormElement form)
 	{
-		HTMLFormElement form = new Form.FormBuilder()
-				.setAction(servlet_url)
-				.setMethod("POST")
-				.append(e)
-				.onSubmit(BasePageUser::onSubmit)
-				.build();	
-		
 		HTMLDivElement panelBody = new Div.DivBuilder()
 				.setClassName("panel-body")
 				.css("color", "#31708f")
@@ -102,8 +92,8 @@ abstract public class BasePageUser
 				.setClassName("panel-heading")
 				.css("background-color", "#FFFFFF")
 				.css("color", "#31708f")
-				.css("background-color", "#d9edf7")
-				.css("border", "1px	solid #bce8f1")
+				.css("background-color", "#D9EDF7")
+				.css("border", "1px	solid #BCE8F1")
 				.append(panelTitle)
 				.build();
 		
@@ -140,24 +130,5 @@ abstract public class BasePageUser
 				.build();
 				
 		$("body").append(container);
-	}
-	
-	/**
-	 * Controlla nel form al momento dell'invio se la email è scritta in modo corretto
-	 * @param e evento 
-	 * @return true se email è scritta in modo corretto, false altrimenti
-	 */
-	public static boolean onSubmit(Event e)
-	{
-		boolean send = true;
-		
-		String email = ((HTMLInputElement) document.getElementById("input_email")).value;
-		if(!email.substring(email.indexOf("@")+1).contains("."))
-		{
-			alert("L'email inserita non è scritta in modo corretto");
-			send = false;
-		}
-		
-		return send;
 	}
 }

@@ -16,10 +16,6 @@ import def.js.JSON;
 public class SenseValidation extends BasePage
 {
 	/**
-	 * ?
-	 */
-	private HTMLLabelElement l1;
-	/**
 	 * Label per parola fornita dal server
 	 */
 	private HTMLLabelElement word;
@@ -81,26 +77,21 @@ public class SenseValidation extends BasePage
 	 */
  	private SenseValidation()
  	{
- 		super();
- 		
- 		l1 = new Label.LabelBuilder()
-				.setTextContent("Data la seguente parola e frase in inglese, verificare se il senso fornito è appropriato")
-				.setAttribute("style", "font-weight: bold")
-				.setClassName("form-control-plaintext")
-				.build();
-		
- 		appendContainer(l1);
+ 		super("Data la seguente parola e frase in inglese, verificare se il senso fornito è appropriato");
 		
 		word = new Label.LabelBuilder()
-				.setClassName("form-control-plaintext")
+				.css("display", "block")
+				.css("text-align", "center")
 				.build();
 		
 		example = new Label.LabelBuilder()
-				.setClassName("form-control-plaintext")
+				.css("display", "block")
+				.css("text-align", "center")
 				.build();
 		
 		sense = new Label.LabelBuilder()
-				.setClassName("form-control-plaintext")
+				.css("display", "block")
+				.css("text-align", "center")
 				.build();
 		
 		si = new Input.InputBuilder()
@@ -160,8 +151,9 @@ public class SenseValidation extends BasePage
 				.build();
 
 		divRadio = new Div.DivBuilder()
-				.setClassName("form-check form-check-inline text-center")
+				.setClassName("form-check form-check-inline")
 				.append(divRadioSi, divRadioNo)
+				.css("margin", "auto")
 				.build();
 		
 		createForm(SERVLET_URL, word, example, sense, divRadio, hWord, hExample, hSense);

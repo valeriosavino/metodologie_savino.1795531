@@ -20,17 +20,17 @@ import def.js.JSON;
 public class SenseAnnotation extends BasePage
 {
 	/**
-	 * ?
+	 * Label per la prima parte della richiesta
 	 */
-	private HTMLLabelElement l1;
+	private HTMLLabelElement request1;
 	/**
 	 * Label per la parola fornita
 	 */
 	private HTMLLabelElement word;
 	/**
-	 * ?
+	 * Label per la seconda parte della richiesta
 	 */
-	private HTMLLabelElement l2;
+	private HTMLLabelElement request2;
 	/**
 	 * Label per la descrizione fornita
 	 */
@@ -76,7 +76,7 @@ public class SenseAnnotation extends BasePage
 	{
 		super();
 				
-		l1 = new Label.LabelBuilder()
+		request1 = new Label.LabelBuilder()
 				.setTextContent("Seleziona il significato corretto della parola \"")
 				.setAttribute("style", "font-weight:bold")
 				.build();
@@ -85,12 +85,14 @@ public class SenseAnnotation extends BasePage
 				.setAttribute("style", "font-weight:bold")
 				.build();
 		
-		l2 = new Label.LabelBuilder()
+		request2 = new Label.LabelBuilder()
 				.setTextContent("\" nella seguente frase")
 				.setAttribute("style", "font-weight:bold")
 				.build();
 		
 		description = new Label.LabelBuilder()
+				.css("display", "block")
+				.css("text-align", "center")
 				.build();
 		
 		hWord = hidden("hWord");
@@ -123,24 +125,26 @@ public class SenseAnnotation extends BasePage
 		
 		divWord = new Div.DivBuilder()
 				.setClassName("form-inline")
-				.append(l1)
+				.append(request1)
 				.append(word)
-				.append(l2)
+				.append(request2)
 				.build();
 		
-		appendContainer(divWord, description);
+		appendContainer(divWord);
 		
 		checkContainer = new Div.DivBuilder()
 				.setClassName("form-check")
 				.append((HTMLElement[]) (divChecks.toArray()))
+				.css("margin-top", "10px")
+				.css("margin-right", "15px")
 				.build();
 		
-		createForm(SERVLET_URL, hWord, hDescription, checkContainer);
+		createForm(SERVLET_URL, hWord, hDescription, description, checkContainer);
 	}
 	
 	/**
 	 * Crea una checkbox con la sua label e li formatta all'interno di un div
-	 * @param id
+	 * @param id id della checkbox
 	 */
 	protected void createCheck(String id)
 	{

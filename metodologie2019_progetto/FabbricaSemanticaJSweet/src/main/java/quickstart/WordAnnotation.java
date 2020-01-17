@@ -10,24 +10,37 @@ import def.js.JSON;
 
 public class WordAnnotation extends BasePage
 {
+	/**
+	 * Indirizzo della servlet per WordAnnotation
+	 */
 	private static final String SERVLET_URL = "wordAnnotation.jsp";
-	private HTMLLabelElement title;
+	/**
+	 * Label per la descrizione fornita
+	 */
 	private HTMLLabelElement description;
+	/**
+	 * Campo nascosto per la descrizione
+	 */
 	private HTMLInputElement hDescription;
+	/**
+	 * Casella di testo per la word
+	 */
 	private HTMLInputElement word;
+	/**
+	 * Contenitore per la descrizione
+	 */
 	private HTMLDivElement splitDescription;
+	/**
+	 * Contenitore per la word
+	 */
 	private HTMLDivElement splitWord;
+	
+	/**
+	 * Costruttore
+	 */
 	private WordAnnotation()
 	{
-		super();
-		
-		title = new Label.LabelBuilder()
-				.setTextContent("Data la seguente definizione, provare a indovinare il termine definito")
-				.setClassName("form-control-plaintext")
-				.setAttribute("style", "font-weight: bold") 
-				.build();
-		
-		appendContainer(title);
+		super("Data la seguente definizione, provare a indovinare il termine definito");
 		
 		description = new Label.LabelBuilder()
 				.setClassName("form-control-plaintext")
@@ -38,7 +51,7 @@ public class WordAnnotation extends BasePage
 		$.getJSON(REST_URL, "task=WORD_ANNOTATION", (Object result, String a, JQueryXHR ctx) -> {
 			JSON json = (JSON) result;
 			String sDescription = json.$get("description");
-			$(description).text(sDescription);
+			$(description).text("Descrizione: "+sDescription);
 			$(hDescription).attr("value", sDescription);
 			return null;
 		});
@@ -47,12 +60,17 @@ public class WordAnnotation extends BasePage
 				.setType("text")
 				.setClassName("form-control")
 				.setName("word")
+				.setPlaceholder("Inserisci la parola...")
+				.css("margin-top", "30px")
+				.css("margin-bottom", "20px")
 				.required()
 				.build();
 		
 		splitDescription = new Div.DivBuilder()
 				.setClassName("col")
 				.append(description, hDescription)
+				.css("margin-top", "20px")
+				.css("margin-bottom", "20px")
 				.build();
 		
 		splitWord = new Div.DivBuilder()

@@ -34,20 +34,21 @@ public class Home extends BasePage
 	 * Contiene l'indirizzo di TranslationAnnotation
 	 */
 	private static final String TASK_URL = "translationAnnotation.html";
+	
 	/**
-	 * Costruisce la pagina Home
+	 * Costruttore
 	 */
 	private Home()
 	{	
-		checkSession();
+		super();
 		
 		fs = new Image.ImageBuilder()
-				.src("logo.jpg")
-				.setAttribute("style", "width:80%;height:50%;")
+				.src("logo_fs.png")
+				.setAttribute("style", "width:80%;height:60%;")
 				.build();
 		
 		start = new Image.ImageBuilder()
-				.src("play.jpg")
+				.src("logo_play.png")
 				.onClick(click -> window.location.href = TASK_URL)
 				.setAttribute("style", "width:200px;height:200px;")
 				.setClassName("center")

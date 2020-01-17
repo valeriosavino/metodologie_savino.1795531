@@ -11,41 +11,62 @@ import def.dom.HTMLInputElement;
 import def.dom.HTMLLabelElement;
 import def.jquery.JQueryXHR;
 import def.js.JSON;
-
+/**
+ * Classe per creazione della pagina translationValidation.html
+ * @author Savino
+ *
+ */
 public class TranslationValidation extends BasePage
 {
-	private HTMLLabelElement l1;
+	/**
+	 * Label per la parola fornita
+	 */
 	private HTMLLabelElement word;
+	/**
+	 * Label per la descrizione fornita
+	 */
 	private HTMLLabelElement description;
+	/**
+	 * Lista di checkBox
+	 */
 	private List<HTMLInputElement> checks;
+	/**
+	 * Lista di label per le checkbox
+	 */
 	private List<HTMLLabelElement> lChecks;
+	/**
+	 * Lista di contenitori per le checkbox
+	 */
 	private List<HTMLDivElement> divChecks;
+	/**
+	 * Campo nascosto per la word
+	 */
 	private HTMLInputElement hWord;
+	/**
+	 * Campo nascosto per la description
+	 */
 	private HTMLInputElement hDescription;
+	/**
+	 * Contenitore di tutti i contenitori per le checkbox
+	 */
 	private HTMLDivElement divCheckBox;
 	
 	private static final String SERVLET_URL = "translationValidation.jsp";
 	
 	private TranslationValidation()
 	{
-		super();
-		
-		l1 = new Label.LabelBuilder()
-				.setTextContent("Data la seguente parola e la sua definizione, scegliere la miglior traduzione")
-				.setClassName("form-control-plaintext")
-				.setAttribute("style", "font-weight:bold")
-				.build();
-		
-		appendContainer(l1);
+		super("Data la seguente parola e la sua definizione, scegliere la miglior traduzione");
 		
 		word = new Label.LabelBuilder()
-				.setClassName("form-control-plaintext")
+				.css("display", "block")
+				.css("text-align", "center")
 				.build();
 		
 		hWord = hidden("hWord");
 		
 		description = new Label.LabelBuilder()
-				.setClassName("form-control-plaintext")
+				.css("display", "block")
+				.css("text-align", "center")
 				.build();
 		
 		hDescription = hidden("hDescription");
@@ -62,9 +83,9 @@ public class TranslationValidation extends BasePage
 			String sWord = json.$get("word");
 			String sDescription = json.$get("description");
 			String[] translations = json.$get("translations");
-			$(word).text(sWord);
+			$(word).text("Parola: "+sWord);
 			$(hWord).attr("value", sWord);
-			$(description).text(sDescription);
+			$(description).text("Descrizione: "+sDescription);
 			$(hDescription).attr("value", sDescription);
 			for(int i=0; i<checks.size()-1; i++)
 			{
@@ -77,7 +98,10 @@ public class TranslationValidation extends BasePage
 		});
 		
 		divCheckBox = new Div.DivBuilder()
+				.setClassName("form-check")
 				.append((HTMLElement[])(divChecks.toArray()))
+				.css("margin-top", "10px")
+				.css("margin-right", "15px")
 				.append(hWord, hDescription)
 				.build();
 		
